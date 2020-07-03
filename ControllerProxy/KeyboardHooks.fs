@@ -67,14 +67,15 @@ let callback = LowLevelKeyboardProc (fun nCode wParam lParam ->
     CallNextHookEx(hookId, nCode, wParam, lParam)
 )
 
+let clearHook () =
+    UnhookWindowsHookEx hookId |> ignore
+
 let run () =
     processEvents()
 
     let worker = Thread(ThreadStart(fun () ->
         hookId <- setHook callback
         Application.Run()
-        UnhookWindowsHookEx hookId |> ignore
     ))
 
-    worker.IsBackground <- false
     worker.Start()

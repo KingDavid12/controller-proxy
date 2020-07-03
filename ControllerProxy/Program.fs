@@ -63,4 +63,7 @@ let main _ =
     printfn "Press enter to exit."
     Console.ReadLine() |> ignore
 
+    bus.UnplugAll() |> ignore
+    clearHook()
+
     0
